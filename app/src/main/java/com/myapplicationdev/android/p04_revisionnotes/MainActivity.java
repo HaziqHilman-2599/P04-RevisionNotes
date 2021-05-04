@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,63 +35,62 @@ public class MainActivity extends AppCompatActivity {
         rbtn3 = findViewById(R.id.radio3);
         rbtn4 = findViewById(R.id.radio4);
         rbtn5 = findViewById(R.id.radio5);
-
-        btnInsert.setOnClickListener(new View.OnClickListener(){
+        btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
+
+                String note = editTextNote.getText().toString();
                 ArrayList<String> data = db.getNoteContent();
 
 
-                String note = editTextNote.getText().toString();
-
-
                 // Insert a task
-                if (note.isEmpty()==false) {
-                    String test = "Failed";
-                    for(int i = 0; i < data.size(); i++){
-                        if(note.equals(data.get(i))) {
+                if (note.isEmpty() == false) {
+                    String test = "";
+                    for (int i = 0; i < data.size(); i++) {
+                        if (note.equals(data.get(i))) {
                             test = "True";
                         }
                     }
-                    if(test.equals("True")) {
-                        Toast.makeText(MainActivity.this, "Same Notes", Toast.LENGTH_LONG).show();
-                    }
-                    else{
+                    if (test.equals("True")) {
+                        Toast.makeText(MainActivity.this, "Error: Unable to insert data, \nReason: Duplicated data exists.", Toast.LENGTH_LONG).show();
+                    } else{
                         if (rbtn1.isChecked()) {
                             db.insertNote("" + note, 1);
-                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+
                         }
 
                         if (rbtn2.isChecked()) {
                             db.insertNote("" + note, 2);
-                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+
                         }
 
                         if (rbtn3.isChecked()) {
                             db.insertNote("" + note, 3);
-                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+
                         }
 
                         if (rbtn4.isChecked()) {
                             db.insertNote("" + note, 4);
-                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+
                         }
 
                         if (rbtn5.isChecked()) {
                             db.insertNote("" + note, 5);
-                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
                         }
+                        Toast.makeText(MainActivity.this, "Data: " + editTextNote.getText() +"inserted", Toast.LENGTH_LONG).show();
                     }
+                }else{
+                    Toast.makeText(MainActivity.this, "Error: Data not inserted. \nReason: Input is empty." , Toast.LENGTH_LONG).show();
                 }
 
                 db.close();
                 closeKeyboard();
             }
         });
-        btnShow.setOnClickListener(new View.OnClickListener(){
+        btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
@@ -101,11 +100,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
     private void closeKeyboard() {
-        View view =  this.getCurrentFocus();
-        if (view != null){
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

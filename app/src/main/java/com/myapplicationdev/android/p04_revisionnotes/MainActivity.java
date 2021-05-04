@@ -2,11 +2,11 @@ package com.myapplicationdev.android.p04_revisionnotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
         btnInsert.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View arg0) {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
                 editTextNote = findViewById(R.id.editTextNote);
                 String note = editTextNote.getText().toString();
+
 
                 // Insert a task
                 rbtn1 = findViewById(R.id.radio1);
@@ -60,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Inserted", Toast.LENGTH_LONG).show();
             }
         });
-        btnInsert.setOnClickListener(new View.OnClickListener(){
+        btnShow.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View arg0) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("Test", "DONE");
                 startActivity(intent);
             }
         });

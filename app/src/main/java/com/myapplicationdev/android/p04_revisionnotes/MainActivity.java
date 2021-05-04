@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnInsert, btnShow;
+    Button btnInsert, btnShow, btnGood;
     EditText editTextNote;
     RadioButton rbtn1, rbtn2, rbtn3, rbtn4, rbtn5;
 
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnInsert = findViewById(R.id.buttonInsertNote);
         btnShow = findViewById(R.id.buttonShowList);
+        btnGood = findViewById(R.id.btnGood);
         editTextNote = findViewById(R.id.editTextNote);
         rbtn1 = findViewById(R.id.radio1);
         rbtn2 = findViewById(R.id.radio2);
@@ -95,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 intent.putExtra("Test", "DONE");
+                startActivity(intent);
+            }
+        });
+
+        btnGood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("Test", "Good");
                 startActivity(intent);
             }
         });

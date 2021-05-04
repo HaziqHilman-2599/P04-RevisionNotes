@@ -111,4 +111,33 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return notes;
     }
+    public ArrayList<Integer> getNoteStar() {
+        //TODO return records in Strings
+
+        // Create an ArrayList that holds String objects
+        ArrayList<Integer> notes = new ArrayList<Integer>();
+        // Select all the notes' content
+        String selectQuery =  "SELECT "
+                + COLUMN_IMG
+                + " FROM " + TABLE_NOTE;
+
+        // Get the instance of database to read
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Run the SQL query and get back the Cursor object
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // moveToFirst() moves to first row
+        if (cursor.moveToFirst()) {
+            // Loop while moveToNext() points to next row and returns true;
+            // moveToNext() returns false when no more next row to move to
+            do {
+                notes.add(cursor.getInt(0));
+
+            } while (cursor.moveToNext());
+        }
+        // Close connection
+        cursor.close();
+        db.close();
+
+        return notes;
+    }
 }

@@ -1,9 +1,12 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
+import android.content.Context;
 import android.content.Intent;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -24,40 +27,45 @@ public class MainActivity extends AppCompatActivity {
 
         btnInsert = findViewById(R.id.buttonInsertNote);
         btnShow = findViewById(R.id.buttonShowList);
-
-
+        editTextNote = findViewById(R.id.editTextNote);
+        rbtn1 = findViewById(R.id.radio1);
+        rbtn2 = findViewById(R.id.radio2);
+        rbtn3 = findViewById(R.id.radio3);
+        rbtn4 = findViewById(R.id.radio4);
+        rbtn5 = findViewById(R.id.radio5);
         btnInsert.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
-                editTextNote = findViewById(R.id.editTextNote);
+
                 String note = editTextNote.getText().toString();
 
 
                 // Insert a task
-                rbtn1 = findViewById(R.id.radio1);
+
                 if (rbtn1.isChecked()){
                     db.insertNote(""+note, 1);
                 }
-                rbtn2 = findViewById(R.id.radio2);
+
                 if (rbtn2.isChecked()){
                     db.insertNote(""+note, 2);
                 }
-                rbtn3 = findViewById(R.id.radio3);
+
                 if (rbtn3.isChecked()){
                     db.insertNote(""+note, 3);
                 }
-                rbtn4 = findViewById(R.id.radio4);
+
                 if (rbtn4.isChecked()){
                     db.insertNote(""+note, 4);
                 }
-                rbtn5 = findViewById(R.id.radio5);
+
                 if (rbtn5.isChecked()){
                     db.insertNote(""+note, 5);
                 }
                 db.close();
+                closeKeyboard();
                 Toast.makeText(MainActivity.this,"Inserted", Toast.LENGTH_LONG).show();
             }
         });
@@ -69,5 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+    private void closeKeyboard() {
+        View view =  this.getCurrentFocus();
+        if (view != null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 }

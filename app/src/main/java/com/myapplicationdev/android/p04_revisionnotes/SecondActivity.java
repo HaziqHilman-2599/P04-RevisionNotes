@@ -25,11 +25,13 @@ public class SecondActivity extends AppCompatActivity {
 
 		lv = (ListView) this.findViewById(R.id.lv);
 
+		// Create the DBHelper object, passing n the activity's content
 		DBHelper db = new DBHelper(SecondActivity.this);
 		alNotes = db.getAllNotes();
 		db.close();
 
 		aaRevision = new RevisionNotesArrayAdapter(this, R.layout.row, alNotes);
+		// Sets the adapter that provides the data and the views to represent the data.
 		lv.setAdapter(aaRevision);
 	}
 

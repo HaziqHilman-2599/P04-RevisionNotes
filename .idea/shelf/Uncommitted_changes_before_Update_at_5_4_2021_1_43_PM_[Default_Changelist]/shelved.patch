@@ -1,0 +1,200 @@
+Index: app/src/main/java/com/myapplicationdev/android/p04_revisionnotes/DBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.myapplicationdev.android.p04_revisionnotes;\r\n\r\nimport android.content.ContentValues;\r\nimport android.content.Context;\r\nimport android.database.Cursor;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.database.sqlite.SQLiteOpenHelper;\r\nimport android.util.Log;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class DBHelper extends SQLiteOpenHelper {\r\n\r\n\t//TODO Define the Database properties\r\n\tprivate static final String DATABASE_NAME = \"\";\r\n\tprivate static final int DATABASE_VERSION = ;\r\n\r\n\r\n\tpublic DBHelper(Context context) {\r\n\t\tsuper(context, DATABASE_NAME, null, DATABASE_VERSION);\r\n\t}\r\n\r\n\t@Override\r\n\tpublic void onCreate(SQLiteDatabase db) {\r\n\t\t//TODO CREATE TABLE Note\r\n\r\n\t}\r\n\r\n\t@Override\r\n\tpublic void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n\t\tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_NOTE);\r\n\t\tonCreate(db);\r\n\t}\r\n\r\n\tpublic void insertNote(String noteContent, int stars) {\r\n\t\t//TODO insert the data into the database\r\n\t}\r\n\r\n\tpublic ArrayList<Note> getAllNotes() {\r\n\t\t//TODO return records in Java objects\r\n\t}\r\n\r\n    public ArrayList<String> getNoteContent() {\r\n        //TODO return records in Strings\r\n\r\n\t\t// Create an ArrayList that holds String objects\r\n        ArrayList<String> notes = new ArrayList<String>();\r\n        // Select all the notes' content\r\n        String selectQuery = \"\";\r\n\r\n        // Get the instance of database to read\r\n        SQLiteDatabase db = this.getReadableDatabase();\r\n        // Run the SQL query and get back the Cursor object\r\n        Cursor cursor = db.rawQuery(selectQuery, null);\r\n        // moveToFirst() moves to first row\r\n        if (cursor.moveToFirst()) {\r\n            // Loop while moveToNext() points to next row and returns true;\r\n            // moveToNext() returns false when no more next row to move to\r\n            do {\r\n\r\n\r\n            } while (cursor.moveToNext());\r\n        }\r\n        // Close connection\r\n        cursor.close();\r\n        db.close();\r\n\r\n        return notes;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/myapplicationdev/android/p04_revisionnotes/DBHelper.java	(revision 6749fefd3d2c34464cfe2217107222fdee829b65)
++++ app/src/main/java/com/myapplicationdev/android/p04_revisionnotes/DBHelper.java	(date 1620106968645)
+@@ -11,39 +11,50 @@
+ 
+ public class DBHelper extends SQLiteOpenHelper {
+ 
+-	//TODO Define the Database properties
+-	private static final String DATABASE_NAME = "";
+-	private static final int DATABASE_VERSION = ;
++    //TODO Define the Database properties
++    private static final String DATABASE_NAME = "";
++    private static final int DATABASE_VERSION = 1;
++
++    private static final String TABLE_NOTE = "Note";
++    private static final String COLUMN_ID = "_id";
++    private static final String COLUMN_DESCRIPTION = "noteContent";
++    private static final String COLUMN_IMG = "stars";
+ 
+ 
+-	public DBHelper(Context context) {
+-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+-	}
++    public DBHelper(Context context) {
++        super(context, DATABASE_NAME, null, DATABASE_VERSION);
++    }
+ 
+-	@Override
+-	public void onCreate(SQLiteDatabase db) {
+-		//TODO CREATE TABLE Note
++    @Override
++    public void onCreate(SQLiteDatabase db) {
++        //TODO CREATE TABLE Note
++		String createTableSql = "CREATE TABLE " + TABLE_NOTE +  "("
++				+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
++				+ COLUMN_IMG + " TEXT,"
++				+ COLUMN_DESCRIPTION + " TEXT )";
++		db.execSQL(createTableSql);
++		Log.i("info" ,"created tables");
+ 
+-	}
++    }
+ 
+-	@Override
+-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTE);
+-		onCreate(db);
+-	}
++    @Override
++    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
++        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTE);
++        onCreate(db);
++    }
+ 
+-	public void insertNote(String noteContent, int stars) {
+-		//TODO insert the data into the database
+-	}
++    public void insertNote(String noteContent, int stars) {
++        //TODO insert the data into the database
++    }
+ 
+-	public ArrayList<Note> getAllNotes() {
+-		//TODO return records in Java objects
+-	}
++    public ArrayList<Note> getAllNotes() {
++        //TODO return records in Java objects
++    }
+ 
+     public ArrayList<String> getNoteContent() {
+         //TODO return records in Strings
+ 
+-		// Create an ArrayList that holds String objects
++        // Create an ArrayList that holds String objects
+         ArrayList<String> notes = new ArrayList<String>();
+         // Select all the notes' content
+         String selectQuery = "";
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1620106540519)
++++ .idea/jarRepositories.xml	(date 1620106540519)
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="BintrayJCenter" />
++      <option name="name" value="BintrayJCenter" />
++      <option name="url" value="https://jcenter.bintray.com/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="Google" />
++      <option name="name" value="Google" />
++      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1620106474589)
++++ .idea/vcs.xml	(date 1620106474589)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 6749fefd3d2c34464cfe2217107222fdee829b65)
++++ .idea/gradle.xml	(date 1620106474601)
+@@ -14,6 +14,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"EntryPointsManager\">\r\n    <entry_points version=\"2.0\" />\r\n  </component>\r\n  <component name=\"NullableNotNullManager\">\r\n    <option name=\"myDefaultNullable\" value=\"android.support.annotation.Nullable\" />\r\n    <option name=\"myDefaultNotNull\" value=\"android.support.annotation.NonNull\" />\r\n    <option name=\"myNullables\">\r\n      <value>\r\n        <list size=\"12\">\r\n          <item index=\"0\" class=\"java.lang.String\" itemvalue=\"org.jetbrains.annotations.Nullable\" />\r\n          <item index=\"1\" class=\"java.lang.String\" itemvalue=\"javax.annotation.Nullable\" />\r\n          <item index=\"2\" class=\"java.lang.String\" itemvalue=\"edu.umd.cs.findbugs.annotations.Nullable\" />\r\n          <item index=\"3\" class=\"java.lang.String\" itemvalue=\"android.support.annotation.Nullable\" />\r\n          <item index=\"4\" class=\"java.lang.String\" itemvalue=\"javax.annotation.CheckForNull\" />\r\n          <item index=\"5\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.Nullable\" />\r\n          <item index=\"6\" class=\"java.lang.String\" itemvalue=\"android.annotation.Nullable\" />\r\n          <item index=\"7\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.RecentlyNullable\" />\r\n          <item index=\"8\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.qual.Nullable\" />\r\n          <item index=\"9\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NullableDecl\" />\r\n          <item index=\"10\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NullableType\" />\r\n          <item index=\"11\" class=\"java.lang.String\" itemvalue=\"com.android.annotations.Nullable\" />\r\n        </list>\r\n      </value>\r\n    </option>\r\n    <option name=\"myNotNulls\">\r\n      <value>\r\n        <list size=\"11\">\r\n          <item index=\"0\" class=\"java.lang.String\" itemvalue=\"org.jetbrains.annotations.NotNull\" />\r\n          <item index=\"1\" class=\"java.lang.String\" itemvalue=\"javax.annotation.Nonnull\" />\r\n          <item index=\"2\" class=\"java.lang.String\" itemvalue=\"edu.umd.cs.findbugs.annotations.NonNull\" />\r\n          <item index=\"3\" class=\"java.lang.String\" itemvalue=\"android.support.annotation.NonNull\" />\r\n          <item index=\"4\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.NonNull\" />\r\n          <item index=\"5\" class=\"java.lang.String\" itemvalue=\"android.annotation.NonNull\" />\r\n          <item index=\"6\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.RecentlyNonNull\" />\r\n          <item index=\"7\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.qual.NonNull\" />\r\n          <item index=\"8\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NonNullDecl\" />\r\n          <item index=\"9\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NonNullType\" />\r\n          <item index=\"10\" class=\"java.lang.String\" itemvalue=\"com.android.annotations.NonNull\" />\r\n        </list>\r\n      </value>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 6749fefd3d2c34464cfe2217107222fdee829b65)
++++ .idea/misc.xml	(date 1620106507178)
+@@ -42,7 +42,7 @@
+       </value>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <resourceExtensions />\r\n    <wildcardResourcePatterns>\r\n      <entry name=\"!?*.java\" />\r\n      <entry name=\"!?*.form\" />\r\n      <entry name=\"!?*.class\" />\r\n      <entry name=\"!?*.groovy\" />\r\n      <entry name=\"!?*.scala\" />\r\n      <entry name=\"!?*.flex\" />\r\n      <entry name=\"!?*.kt\" />\r\n      <entry name=\"!?*.clj\" />\r\n      <entry name=\"!?*.aj\" />\r\n    </wildcardResourcePatterns>\r\n    <annotationProcessing>\r\n      <profile default=\"true\" name=\"Default\" enabled=\"false\">\r\n        <processorPath useClasspath=\"true\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision 6749fefd3d2c34464cfe2217107222fdee829b65)
++++ .idea/compiler.xml	(date 1620106507188)
+@@ -1,22 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <resourceExtensions />
+-    <wildcardResourcePatterns>
+-      <entry name="!?*.java" />
+-      <entry name="!?*.form" />
+-      <entry name="!?*.class" />
+-      <entry name="!?*.groovy" />
+-      <entry name="!?*.scala" />
+-      <entry name="!?*.flex" />
+-      <entry name="!?*.kt" />
+-      <entry name="!?*.clj" />
+-      <entry name="!?*.aj" />
+-    </wildcardResourcePatterns>
+-    <annotationProcessing>
+-      <profile default="true" name="Default" enabled="false">
+-        <processorPath useClasspath="true" />
+-      </profile>
+-    </annotationProcessing>
++    <bytecodeTargetLevel target="1.8" />
+   </component>
+ </project>
+\ No newline at end of file

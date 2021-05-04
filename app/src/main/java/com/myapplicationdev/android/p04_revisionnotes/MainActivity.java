@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnInsert, btnShow;
@@ -33,40 +35,60 @@ public class MainActivity extends AppCompatActivity {
         rbtn3 = findViewById(R.id.radio3);
         rbtn4 = findViewById(R.id.radio4);
         rbtn5 = findViewById(R.id.radio5);
+
         btnInsert.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
+                ArrayList<String> data = db.getNoteContent();
+
 
                 String note = editTextNote.getText().toString();
 
 
                 // Insert a task
+                if (note.isEmpty()==false) {
+                    String test = "Failed";
+                    for(int i = 0; i < data.size(); i++){
+                        if(note.equals(data.get(i))) {
+                            test = "True";
+                        }
+                    }
+                    if(test.equals("True")) {
+                        Toast.makeText(MainActivity.this, "Same Notes", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        if (rbtn1.isChecked()) {
+                            db.insertNote("" + note, 1);
+                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                        }
 
-                if (rbtn1.isChecked()){
-                    db.insertNote(""+note, 1);
+                        if (rbtn2.isChecked()) {
+                            db.insertNote("" + note, 2);
+                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                        }
+
+                        if (rbtn3.isChecked()) {
+                            db.insertNote("" + note, 3);
+                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                        }
+
+                        if (rbtn4.isChecked()) {
+                            db.insertNote("" + note, 4);
+                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                        }
+
+                        if (rbtn5.isChecked()) {
+                            db.insertNote("" + note, 5);
+                            Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
 
-                if (rbtn2.isChecked()){
-                    db.insertNote(""+note, 2);
-                }
-
-                if (rbtn3.isChecked()){
-                    db.insertNote(""+note, 3);
-                }
-
-                if (rbtn4.isChecked()){
-                    db.insertNote(""+note, 4);
-                }
-
-                if (rbtn5.isChecked()){
-                    db.insertNote(""+note, 5);
-                }
                 db.close();
                 closeKeyboard();
-                Toast.makeText(MainActivity.this,"Inserted", Toast.LENGTH_LONG).show();
             }
         });
         btnShow.setOnClickListener(new View.OnClickListener(){

@@ -88,9 +88,8 @@ public class DBHelper extends SQLiteOpenHelper {
         // Create an ArrayList that holds String objects
         ArrayList<String> notes = new ArrayList<String>();
         // Select all the notes' content
-        String selectQuery =  "SELECT " + COLUMN_ID + ", "
-                + COLUMN_DESCRIPTION + ", "
-                + COLUMN_IMG
+        String selectQuery =  "SELECT "
+                + COLUMN_DESCRIPTION
                 + " FROM " + TABLE_NOTE;
 
         // Get the instance of database to read
@@ -102,11 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
             // Loop while moveToNext() points to next row and returns true;
             // moveToNext() returns false when no more next row to move to
             do {
-                int id = cursor.getInt(0);
-                String description = cursor.getString(1);
-                int star = cursor.getInt(2);
-                Note obj = new Note(id, description, star);
-                notes.add(String.valueOf(obj));
+                notes.add(cursor.getString(0));
 
             } while (cursor.moveToNext());
         }
